@@ -14,7 +14,7 @@ class FenManager:
         Verifies the FEN string.
 
         :return:
-            True if the FEN string is valid, raise an error otherwise.
+            None if all checks passed, raise an error otherwise
         """
         try:
             self._initialize_fields()
@@ -33,7 +33,7 @@ class FenManager:
         If the number is correct, each field is stored in an attribute
 
         :return:
-            True if the number of fields is correct, raise an error otherwise.
+            None if the number of fields is correct, raise an error otherwise.
         """
         split_fen = self.fen.split(" ")
         if len(split_fen) != 6:
@@ -51,7 +51,7 @@ class FenManager:
         Checks the first field of the FEN string. The first field must contain 8 ranks separated by a "/" character.
 
         :return:
-            True if the first field is correct, raise an error otherwise.
+            None if the first field is correct, raise an error otherwise.
         """
         ranks = self.first_field.split("/")
         if len(ranks) != 8:
@@ -62,7 +62,7 @@ class FenManager:
         Checks the second field of the FEN string. The second field must be either "w" or "b".
 
         :return:
-            True if the second field is correct, raise an error otherwise.
+            None if the second field is correct, raise an error otherwise.
         """
         if self.second_field not in ["w", "b"]:
             raise ValueError(f"Invalid FEN: Incorrect active color. Expected 'w' or 'b', got {self.second_field}")
@@ -72,7 +72,7 @@ class FenManager:
         Checks the third field of the FEN string. The third field must be a valid castling rights string.
 
         :return:
-            True if the third field is correct, raise an error otherwise.
+            None if the third field is correct, raise an error otherwise.
         """
         valid_castling_rights = ["K", "Q", "k", "q", "-"]
         for char in self.third_field:
@@ -86,7 +86,7 @@ class FenManager:
         Checks the fourth field of the FEN string. The fourth field must be a valid en passant target square.
 
         :return:
-            True if the fourth field is correct, False otherwise.
+            None if the fourth field is correct, raise an error otherwise.
         """
         en_passant_target = self.fourth_field
         if en_passant_target == "-":
@@ -101,7 +101,7 @@ class FenManager:
         Checks the fifth field of the FEN string. The fifth field must be a valid halfmove clock.
 
         :return:
-            True if the fifth field is correct, raise an error otherwise.
+            None if the fifth field is correct, raise an error otherwise.
         """
         if not self.fifth_field.isdigit() or int(self.fifth_field) < 0:
             raise ValueError(f"Invalid FEN: Incorrect half-move clock. Expected a digit superior or equal to 0, got {self.fifth_field}")
