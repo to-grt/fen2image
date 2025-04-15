@@ -1,12 +1,24 @@
 class FenManager:
 
-    def __init__(self, fen: str):
+    def __init__(self, fen: str) -> None:
         """
         Initializes the FenManager with a FEN string.
 
         :param fen: The FEN string to be managed.
         """
         self.fen = fen
+        self.verify_fen()
+
+    def change_fen(self, new_fen: str) -> None:
+        """
+        Change the fen attributes to the new_fen parameter, then checks new_fen integrity.
+        Even if an error is raised during this verification, the new invalid fen will replace to old one.
+
+        :param new_fen: The new FEN string to be managed
+        :return:
+            None if everything went well, raise an error otherwise
+        """
+        self.fen = new_fen
         self.verify_fen()
 
     def verify_fen(self) -> None:
