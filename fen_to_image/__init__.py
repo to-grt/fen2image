@@ -1,1 +1,1 @@
-from .FenManager import FenManager
+from .utils import fen_to_image
