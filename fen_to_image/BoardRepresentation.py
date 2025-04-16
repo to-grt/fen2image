@@ -1,7 +1,8 @@
+import random
 from PIL import Image
 from typing import List
 
-from .constants import piece_to_filename, PATH_RESULT
+from .constants import piece_to_filename, PATH_RESULT, PATH_OTHER
 from .utils import get_list_available_pieces, get_list_available_boards, get_dict_available_boards, get_dict_available_pieces
 
 
@@ -22,13 +23,15 @@ class BoardRepresentation:
         self.half_move_count: int = half_move_count
         self.full_move_count: int = full_move_count
 
-    def create_image(self, pieces_design: str = "classic", board_design: str = "wood") -> Image:
+    def create_image(self, pieces_design: str = "classic", board_design: str = "random") -> Image:
         """
         Create an image of the board representation.
 
         :param pieces_design: The design of the pieces.
         :param board_design: The design of the board.
         """
+        if board_design == "random":
+            board_design = random.choice(get_list_available_boards())
         self._verify_designs(pieces_design, board_design)
         board_path = get_dict_available_boards()[board_design]
         pieces_path = get_dict_available_pieces()[pieces_design]
@@ -53,8 +56,17 @@ class BoardRepresentation:
                     composite.paste(piece, position, piece)
                     index_col += 1
 
-        composite.save(PATH_RESULT / "result.png")
-        return composite
+        frame_name = "wFrame.png" if self.color_turn == "w" else "bFrame.png"
+        frame = Image.open(PATH_OTHER / frame_name).convert("RGBA").resize((square_size//2, square_size//2), Image.LANCZOS)
+        width, height = composite.size
+        frame_width, frame_height = frame.size
+        new_width, new_height = width + frame_width+square_size//4, height + frame_height
+        new_frame = Image.new("RGBA", (new_width, new_height))
+        new_frame.paste(composite, (0, 0))
+        new_frame.paste(frame, (width+square_size//4, height-frame_height-square_size//4))
+
+        new_frame.save(PATH_RESULT / "result.png")
+        return new_frame
 
 
     def _verify_designs(self, pieces_design: str, board_design: str) -> None:

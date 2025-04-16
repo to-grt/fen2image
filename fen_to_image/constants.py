@@ -5,6 +5,7 @@ PATH_PROJECT = Path(__file__).resolve().parent.parent
 PATH_ARTS = PATH_PROJECT / 'resources' / 'arts'
 PATH_BOARDS = PATH_ARTS / 'boards'
 PATH_PIECES = PATH_ARTS / 'pieces'
+PATH_OTHER = PATH_ARTS / 'other'
 PATH_RESULT = PATH_PROJECT / 'result_file'
 
 # dictionary associations
