@@ -11,5 +11,6 @@ def fen_to_image(fen: str) -> Image:
     """
 
     fen = Fen(fen)
+    print(f"fen: {fen}")
     board = fen.to_board_representation()
     return board.create_image()
