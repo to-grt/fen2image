@@ -68,6 +68,11 @@ class FenManager:
         ranks = self.first_field.split("/")
         if len(ranks) != 8:
             raise ValueError(f"Invalid FEN: Incorrect number of ranks. Expected 8, got {len(ranks)}. Field: {self.first_field}")
+        correct_characters = "rnbqkpRNBQKP12345678/"
+        for char in self.first_field:
+            if char not in correct_characters:
+                raise ValueError(f"Invalid FEN: Incorrect characters in rank. Expected characters from {correct_characters}, got {char}")
+
 
     def _check_second_field(self) -> None:
         """
@@ -87,6 +92,10 @@ class FenManager:
             None if the third field is correct, raise an error otherwise.
         """
         valid_castling_rights = ["K", "Q", "k", "q", "-"]
+        if len(self.third_field) > 4:
+            raise ValueError(f"Invalid FEN: Incorrect castling rights. Expected rights of the form 'KQkq' or '-', got {self.third_field}")
+        if len(set(self.third_field)) != len(self.third_field):
+            raise ValueError(f"Invalid FEN: Incorrect castling rights. Castling rights must be unique, got {self.third_field}")
         for char in self.third_field:
             if char not in valid_castling_rights:
                 raise ValueError(f"Invalid FEN: Incorrect castling rights. Expected rights of the form 'KQkq' or '-', got {self.third_field}")
