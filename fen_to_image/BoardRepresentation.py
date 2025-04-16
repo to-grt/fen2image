@@ -1,8 +1,8 @@
 from PIL import Image
 from typing import List
 
-from fen_to_image.constants import piece_to_filename
-from utils import get_list_available_pieces, get_list_available_boards, get_dict_available_boards, get_dict_available_pieces
+from .constants import piece_to_filename, PATH_RESULT
+from .utils import get_list_available_pieces, get_list_available_boards, get_dict_available_boards, get_dict_available_pieces
 
 
 class BoardRepresentation:
@@ -22,7 +22,7 @@ class BoardRepresentation:
         self.half_move_count: int = half_move_count
         self.full_move_count: int = full_move_count
 
-    def create_image(self, pieces_design: str = "classic", board_design: str = "wood") -> None:
+    def create_image(self, pieces_design: str = "classic", board_design: str = "wood") -> Image:
         """
         Create an image of the board representation.
 
@@ -34,9 +34,6 @@ class BoardRepresentation:
         pieces_path = get_dict_available_pieces()[pieces_design]
 
         board = Image.open(board_path).convert("RGBA")
-        wP_path = pieces_path / "wP.png"
-        wP = Image.open(wP_path).convert("RGBA")
-
         square_size = board.width // 8
         composite = board.copy()
 
@@ -56,8 +53,8 @@ class BoardRepresentation:
                     composite.paste(piece, position, piece)
                     index_col += 1
 
-         # composite.save("chess_composite.png")
-        composite.show()
+        composite.save(PATH_RESULT / "result.png")
+        return composite
 
 
     def _verify_designs(self, pieces_design: str, board_design: str) -> None:

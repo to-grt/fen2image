@@ -1,6 +1,4 @@
-from Fen import Fen
-from PIL import Image
-from constants import *
+from .constants import *
 
 
 def get_list_available_boards() -> list[str]:
@@ -34,15 +32,3 @@ def get_dict_available_pieces() -> dict[str, Path]:
     :return: a dictionary of available pieces with their name as key and their path as value
     """
     return {_.name: _ for _ in PATH_PIECES.iterdir()}
-
-def fen_to_image(fen: str) -> Image:
-    """
-    Convert a FEN string to an image.
-
-    :param fen: the FEN string
-    :return: the image
-    """
-
-    fen = Fen(fen)
-    board = fen.to_board_representation()
-    return board.create_image()

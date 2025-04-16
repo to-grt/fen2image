@@ -1,4 +1,4 @@
-from fen_to_image.BoardRepresentation import BoardRepresentation
+from .BoardRepresentation import BoardRepresentation
 
 
 class Fen:
@@ -62,7 +62,7 @@ class Fen:
             half_move_count,
             full_move_count)
 
-    def _verify(self) -> None:
+    def verify(self) -> None:
         """
         Verifies the FEN string.
 

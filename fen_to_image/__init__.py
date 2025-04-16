@@ -1,1 +1,1 @@
-from .utils import fen_to_image
+from .core import fen_to_image
