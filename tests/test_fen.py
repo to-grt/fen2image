@@ -71,12 +71,6 @@ class TestFen(unittest.TestCase):
             fen_obj.verify()
         self.assertIn("Incorrect full-move number", str(context.exception))
 
-    def test_to_board_representation_without_verify(self):
-        fen_obj = Fen(self.valid_fen)
-        with self.assertRaises(ValueError) as context:
-            fen_obj.to_board_representation()
-        self.assertIn("not verified", str(context.exception))
-
     def test_to_board_representation_valid(self):
         fen_obj = Fen(self.valid_fen)
         fen_obj.verify()

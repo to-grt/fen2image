@@ -11,6 +11,5 @@ def fen_to_image(fen: str) -> Image:
     """
 
     fen = Fen(fen)
-    fen.verify()
     board = fen.to_board_representation()
     return board.create_image()

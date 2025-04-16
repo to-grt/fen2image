@@ -33,7 +33,7 @@ class Fen:
         Convert FEN object to a BoardRepresentation object.
         """
         if not self.verified:
-            raise ValueError("FEN string is not verified. Please verify the FEN string before any convertion.")
+            self.verify()
 
         split_fen = self.fen.split(" ")
 
