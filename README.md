@@ -1,5 +1,17 @@
-# fen-to-image
+# fen_to_image
 
+Transform a FEN string to a PIL Image.  
+A short package for chess players :)
+When provided a FEN position as a string, this module will verify the FEN integrity. The verification is quite extensive but I have might have forget some cases.
+If the FEN is not correct, an error will be raised.
 
-A short package to transform (after validity verification) any fen to an image of the chessboard with the given position.
-The produced image's type can be chosen.
+Usage:
+
+```python
+from fen_to_image import fen_to_image
+
+img = fen_to_image('your_fen')
+img.show()  # as for every PIL Image
+```
+
+Enjoy.
