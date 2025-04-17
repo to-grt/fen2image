@@ -1,7 +1,7 @@
 import unittest
 
-from fen_to_image.Fen import Fen
-from fen_to_image.BoardRepresentation import BoardRepresentation
+from fen2image.Fen import Fen
+from fen2image.BoardRepresentation import BoardRepresentation
 
 
 class TestFen(unittest.TestCase):

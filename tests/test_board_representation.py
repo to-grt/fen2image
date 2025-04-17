@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-from fen_to_image.BoardRepresentation import BoardRepresentation
+from fen2image.BoardRepresentation import BoardRepresentation
 
 
 class TestBoardRepresentation(unittest.TestCase):
@@ -42,8 +42,8 @@ class TestBoardRepresentation(unittest.TestCase):
         self.assertEqual(self.br.half_move_count, self.half_move_count)
         self.assertEqual(self.br.full_move_count, self.full_move_count)
 
-    @patch("fen_to_image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
-    @patch("fen_to_image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
+    @patch("fen2image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
+    @patch("fen2image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
     def test_verify_designs_valid(self, mock_boards_list, mock_pieces_list):
         """Test that _verify_designs passes with valid design names."""
         try:
@@ -51,25 +51,25 @@ class TestBoardRepresentation(unittest.TestCase):
         except ValueError as e:
             self.fail(f"_verify_designs raised ValueError unexpectedly: {e}")
 
-    @patch("fen_to_image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
+    @patch("fen2image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
     def test_verify_designs_invalid_pieces(self, mock_pieces_list):
         """Test that _verify_designs raises an error for an invalid pieces design."""
         with self.assertRaises(ValueError) as context:
             self.br._verify_designs("invalid_design", "wood")
         self.assertIn("Pieces design 'invalid_design' is not available", str(context.exception))
 
-    @patch("fen_to_image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
+    @patch("fen2image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
     def test_verify_designs_invalid_board(self, mock_boards_list):
         """Test that _verify_designs raises an error for an invalid board design."""
         with self.assertRaises(ValueError) as context:
             self.br._verify_designs("classic", "invalid_board")
         self.assertIn("Board design 'invalid_board' is not available", str(context.exception))
 
-    @patch("fen_to_image.BoardRepresentation.get_dict_available_boards", return_value={"wood": "dummy_board_path.png", "metal": "dummy_board_path2.png"})
-    @patch("fen_to_image.BoardRepresentation.get_dict_available_pieces", return_value={"classic": Path("dummy_pieces"), "modern": Path("dummy_pieces_mod")})
-    @patch("fen_to_image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
-    @patch("fen_to_image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
-    @patch.dict("fen_to_image.constants.piece_to_filename", {"P": "wP.png", "p": "bP.png", "K": "wK.png", "k": "bK.png"})
+    @patch("fen2image.BoardRepresentation.get_dict_available_boards", return_value={"wood": "dummy_board_path.png", "metal": "dummy_board_path2.png"})
+    @patch("fen2image.BoardRepresentation.get_dict_available_pieces", return_value={"classic": Path("dummy_pieces"), "modern": Path("dummy_pieces_mod")})
+    @patch("fen2image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
+    @patch("fen2image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
+    @patch.dict("fen2image.constants.piece_to_filename", {"P": "wP.png", "p": "bP.png", "K": "wK.png", "k": "bK.png"})
     def test_create_image_piece_pasting(self, mock_dict_boards, mock_dict_pieces, mock_list_pieces, mock_list_boards):
         """
         Test a scenario where the board has an actual piece so that the paste() function is called.
@@ -94,10 +94,10 @@ class TestBoardRepresentation(unittest.TestCase):
             full_move_count=1
         )
 
-    @patch("fen_to_image.BoardRepresentation.get_dict_available_boards", return_value={"wood": "dummy_board_path.png", "metal": "dummy_board_path2.png"})
-    @patch("fen_to_image.BoardRepresentation.get_dict_available_pieces", return_value={"classic": Path("dummy_pieces"), "modern": Path("dummy_pieces_mod")})
-    @patch("fen_to_image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
-    @patch("fen_to_image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
+    @patch("fen2image.BoardRepresentation.get_dict_available_boards", return_value={"wood": "dummy_board_path.png", "metal": "dummy_board_path2.png"})
+    @patch("fen2image.BoardRepresentation.get_dict_available_pieces", return_value={"classic": Path("dummy_pieces"), "modern": Path("dummy_pieces_mod")})
+    @patch("fen2image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
+    @patch("fen2image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
     def test_create_image_invalid_designs(self, mock_boards_list, mock_pieces_list, mock_dict_pieces, mock_dict_boards):
         """
         Test that create_image raises a ValueError when given an unavailable pieces or board design.

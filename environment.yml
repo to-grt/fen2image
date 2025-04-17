@@ -1,4 +1,4 @@
-name: fen_to_image
+name: fen2image
 channels:
   - defaults
 dependencies:
