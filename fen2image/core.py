@@ -2,7 +2,7 @@ from .Fen import Fen
 from PIL import Image
 
 
-def fen_to_image(fen: str, board_design: str = "random") -> Image:
+def fen2image(fen: str, board_design: str = "random") -> Image:
     """
     Convert a FEN string to an image.
 

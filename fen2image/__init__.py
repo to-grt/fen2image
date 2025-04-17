@@ -1,1 +1,1 @@
-from .core import fen_to_image
+from .core import fen2image
