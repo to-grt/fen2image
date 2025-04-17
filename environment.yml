@@ -1,0 +1,9 @@
+name: fen_to_image
+channels:
+  - defaults
+dependencies:
+  - pillow
+  - pip
+  - python=3.10
+  - pip:
+    - -e .
