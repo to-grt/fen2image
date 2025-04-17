@@ -3,3 +3,7 @@ channels:
   - defaults
 dependencies:
   - pillow
+  - pip
+  - python=3.10
+  - pip:
+    - -e .
