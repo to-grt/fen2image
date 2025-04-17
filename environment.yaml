@@ -1,0 +1,5 @@
+name: fen_to_image
+channels:
+  - defaults
+dependencies:
+  - pillow
