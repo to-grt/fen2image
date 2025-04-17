@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fen2image"
-version = "1.0.0"
+version = "1.0.1"
 description = "Convert chess FEN strings to PIL Image"
 authors = [{ name = "Théo Gueuret", email = "tgueuret@live.fr" }]
 readme = "README.md"
