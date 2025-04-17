@@ -1,4 +1,4 @@
-# fen_to_image
+# fen2image
 
 Transform a FEN string to a PIL Image.  
 A short package for chess players :)
