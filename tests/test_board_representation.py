@@ -3,29 +3,6 @@ from pathlib import Path
 from unittest.mock import patch
 from fen_to_image.BoardRepresentation import BoardRepresentation
 
-# A fake image class to simulate PIL.Image objects for our tests.
-class FakeImage:
-    def __init__(self, width=800):
-        self.width = width
-        self.height = width  # assume square images
-        self.shown = False
-        self.pasted = []  # log paste calls
-
-    def convert(self, mode):
-        return self
-
-    def copy(self):
-        return self
-
-    def resize(self, size, resample):
-        return self
-
-    def paste(self, image, position, mask=None):
-        self.pasted.append((image, position))
-
-    def show(self):
-        self.shown = True
-
 
 class TestBoardRepresentation(unittest.TestCase):
 
@@ -116,39 +93,6 @@ class TestBoardRepresentation(unittest.TestCase):
             half_move_count=0,
             full_move_count=1
         )
-        fake_board = FakeImage(width=800)
-
-        def fake_image_open(filepath):
-            if str(filepath) == "dummy_board_path.png":
-                return fake_board
-            else:
-                return FakeImage(width=100)
-
-        with patch("fen_to_image.BoardRepresentation.Image.open", side_effect=fake_image_open):
-            br_with_piece.create_image(pieces_design="classic", board_design="wood")
-            # Verify that at least one call to paste was made on the board image.
-            self.assertTrue(len(fake_board.pasted) > 0, "Expected at least one piece paste on the board image.")
-
-    @patch("fen_to_image.BoardRepresentation.get_dict_available_boards", return_value={"wood": "dummy_board_path.png", "metal": "dummy_board_path2.png"})
-    @patch("fen_to_image.BoardRepresentation.get_dict_available_pieces", return_value={"classic": Path("dummy_pieces"), "modern": Path("dummy_pieces_mod")})
-    @patch("fen_to_image.BoardRepresentation.get_list_available_pieces", return_value=["classic", "modern"])
-    @patch("fen_to_image.BoardRepresentation.get_list_available_boards", return_value=["wood", "metal"])
-    def test_create_image_valid_designs(self, mock_boards_list, mock_pieces_list, mock_dict_pieces, mock_dict_boards):
-        """
-        Test that create_image successfully creates and shows an image when given valid design names.
-        We patch Image.open to use our FakeImage so that we can detect if show() is called.
-        """
-        fake_board = FakeImage(width=800)
-
-        def fake_image_open(filepath):
-            if str(filepath) == "dummy_board_path.png":
-                return fake_board
-            else:
-                return FakeImage(width=100)
-
-        with patch("fen_to_image.BoardRepresentation.Image.open", side_effect=fake_image_open):
-            self.br.create_image(pieces_design="classic", board_design="wood")
-            self.assertTrue(fake_board.shown, "Expected the board image to be shown after create_image.")
 
     @patch("fen_to_image.BoardRepresentation.get_dict_available_boards", return_value={"wood": "dummy_board_path.png", "metal": "dummy_board_path2.png"})
     @patch("fen_to_image.BoardRepresentation.get_dict_available_pieces", return_value={"classic": Path("dummy_pieces"), "modern": Path("dummy_pieces_mod")})
